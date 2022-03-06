@@ -8,16 +8,19 @@ const searchUrl = `https://api.unsplash.com/search/photos/`;
 function App() {
   const [loading, setLoading] = useState(false);
   const [photos, setPhotos] = useState([]);
+  const [page, setPage] = useState(1);
 
   const fetchImages = async () => {
     setLoading(true);
     let url;
-    url = `${mainUrl}${clientID}`;
+    const urlPage = `&page=${page}`;
+    url = `${mainUrl}${clientID}${urlPage}`;
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data);
-      setPhotos(data);
+      setPhotos((oldphotos) => {
+        return [...oldphotos, ...data];
+      });
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -27,6 +30,19 @@ function App() {
 
   useEffect(() => {
     fetchImages([]);
+  }, [page]);
+
+  //setting up infinite scroll function
+  useEffect(() => {
+    const event = window.addEventListener("scroll", () => {
+      if (
+        !loading &&
+        window.innerHeight + window.scrollY >= document.body.scrollHeight - 2
+      ) {
+        setPage((page) => page + 1);
+      }
+    });
+    return () => window.addEventListener("scroll", event);
   }, []);
 
   const handleSubmit = (e) => {
