@@ -153,13 +153,13 @@ Stock Photos
 .form-input,
 .submit-btn {
   padding: 0.75rem 1.25rem;
-  border: none;
+  border: 3px solid var(--clr-grey-5);
   text-transform: capitalize;
   letter-spacing: var(--spacing);
   font-size: 1.5rem;
   background: transparent;
   color: var(--clr-grey-5);
-  border-bottom: 3px solid var(--clr-grey-5);
+  /* border-bottom: 3px solid var(--clr-grey-5); */
 }
 .form-input {
   color: var(--clr-grey-3);
